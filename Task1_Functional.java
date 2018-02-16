@@ -8,7 +8,7 @@ import st.SimpleTemplateEngine;
 
 // Colin Parrott (s1546623) and Stephen Waddell (s1346249)
 
-public class FunctionalTests 
+public class Task1_Functional 
 {
     private EntryMap map;
     private TemplateEngine engine;
