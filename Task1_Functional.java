@@ -334,6 +334,16 @@ public class Task1_Functional
         assertEquals("Adam is 19", output);
     }
 
+    @Test
+    public void TemplateContainsUnusualChars()
+    {
+        map.store("père", "father");
+        map.store("@name", "Adam");
+
+        String output = engine.evaluate("${@name} is my ${père}", map, TemplateEngine.DEFAULT);
+        assertEquals("Adam is my father", output);
+    }
+
 
     // Spec 5 ------------------------------
 
