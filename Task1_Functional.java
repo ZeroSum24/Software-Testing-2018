@@ -9,14 +9,14 @@ import st.SimpleTemplateEngine;
 
 // Colin Parrott (s1546623) and Stephen Waddell (s1346249)
 
-public class Task1_Functional 
+public class Task1_Functional
 {
     private EntryMap map;
     private TemplateEngine engine;
     private SimpleTemplateEngine simpleEngine;
-    
+
     @Before
-    public void setUp() throws Exception 
+    public void setUp() throws Exception
     {
         map = new EntryMap();
         engine = new TemplateEngine();
@@ -35,7 +35,7 @@ public class Task1_Functional
     {
     	map.store(null, "text");
     }
-    
+
     @Test(expected = RuntimeException.class)
     public void EntryMapTemplateEmpty()
     {
@@ -82,6 +82,21 @@ public class Task1_Functional
         map.store("name", "Bob");
         map.store("age", "19");
         map.store("city", "Edinburgh");
+        map.store("city", "London");
+
+        String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
+        assertEquals(output, "Adam is 19 from Edinburgh");
+    }
+
+    @Test
+    public void DuplicateEntriesCorrectTriple()
+    {
+        map.store("name", "Adam");
+        map.store("name", "Bob");
+        map.store("name", "Steve");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+        map.store("city", "Glasgow");
         map.store("city", "London");
 
         String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
