@@ -408,6 +408,31 @@ public class Task1_Functional
         assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
     }
 
+    // Spec 6 ------------------------------
+    @Test
+    public void TemplateCaseSensitive()
+    {
+        map.store("NaMe", "Adam");
+        map.store("CITY", "Edinburgh");
+        map.store("aGe", "19");
+        map.store("likes", "chocolate");
+
+        String output = engine.evaluate("${NaMe} is ${age} from ${CITY} and likes ${Likes}", map, TemplateEngine.CASE_SENSITIVE);
+        assertEquals("Adam is ${age} from Edinburgh and likes ${Likes}", output);
+    }
+
+    @Test
+    public void TemplateCaseInsensitive()
+    {
+        map.store("NaMe", "Adam");
+        map.store("CITY", "Edinburgh");
+        map.store("aGe", "19");
+        map.store("likes", "chocolate");
+
+        String output = engine.evaluate("${NaMe} is ${age} from ${CITY} and likes ${Likes}", map, TemplateEngine.CASE_INSENSITIVE);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
 
 
 
