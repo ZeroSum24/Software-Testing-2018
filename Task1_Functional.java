@@ -197,6 +197,7 @@ public class Task1_Functional
         String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.CASE_SENSITIVE | TemplateEngine.CASE_INSENSITIVE);
         assertEquals(output,"${NaMe} is ${ age  } from Edinburgh and likes ${like}");
     }
+
     @Test
     public void TemplateConflictingSearch()
     {
@@ -206,6 +207,105 @@ public class Task1_Functional
         String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH | TemplateEngine.ACCURATE_SEARCH);
         assertEquals(output,"Adam is ${ age  } from Edinburgh and likes ${like}");
     }
+
+    // Below are 9 tests that does pairwise combinations on the matching modes
+    @Test
+    public void TemplateAllDefault()
+    {
+        assertTrue(TemplateMatchingModeUseDefaults(TemplateEngine.KEEP_UNMATCHED | TemplateEngine.CASE_INSENSITIVE | TemplateEngine.ACCURATE_SEARCH));
+    }
+
+    @Test
+    public void TemplateInsensitiveOnly()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.CASE_INSENSITIVE);
+        assertEquals(output,"Adam is ${ age  } from Edinburgh and likes ${like}");
+    }
+
+    @Test
+    public void TemplateInsensitiveOthersNonDefault()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.CASE_INSENSITIVE | TemplateEngine.DELETE_UNMATCHED | TemplateEngine.BLUR_SEARCH);
+        assertEquals(output,"Adam is 19 from Edinburgh and likes ");
+    }
+
+    @Test
+    public void TemplateKeepMatchedOnly()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.KEEP_UNMATCHED);
+        assertEquals(output,"Adam is ${ age  } from Edinburgh and likes ${like}");
+    }
+
+    @Test
+    public void TemplateKeepUnmatchedOthersNonDefault()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.KEEP_UNMATCHED | TemplateEngine.CASE_SENSITIVE | TemplateEngine.BLUR_SEARCH);
+        assertEquals(output,"${NaMe} is 19 from Edinburgh and likes ${like}");
+    }
+
+    @Test
+    public void TemplateDeleteAndCaseSensitiveOnly()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.DELETE_UNMATCHED | TemplateEngine.CASE_SENSITIVE);
+        assertEquals(output," is  from Edinburgh and likes ");
+    }
+
+    @Test
+    public void TemplateDeleteUnmatchedAndAccurateSearchOnly()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.DELETE_UNMATCHED | TemplateEngine.ACCURATE_SEARCH);
+        assertEquals(output,"Adam is  from Edinburgh and likes ");
+    }
+
+    @Test
+    public void TemplateCaseSensitiveAndAccurateSearchOnly()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.CASE_SENSITIVE | TemplateEngine.ACCURATE_SEARCH);
+        assertEquals(output,"${NaMe} is ${ age  } from Edinburgh and likes ${like}");
+    }
+
+    @Test
+    public void TemplateBlurSearchOnly()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals(output,"Adam is 19 from Edinburgh and likes ${like}");
+    }
+
+
+
+
 
 
 }
