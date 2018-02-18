@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +16,15 @@ public class Task1_Functional
     private TemplateEngine engine;
     private SimpleTemplateEngine simpleEngine;
 
+    private String templateEngineTestString;
+
     @Before
     public void setUp() throws Exception
     {
         map = new EntryMap();
         engine = new TemplateEngine();
         simpleEngine = new SimpleTemplateEngine();
+        templateEngineTestString = "${NaMe} is ${ age  } from ${city} and likes ${like}";
     }
 
 
@@ -136,5 +140,72 @@ public class Task1_Functional
         String output = engine.evaluate("${name}", null, TemplateEngine.DEFAULT);
         assertEquals(output, "${name}");
     }
+
+    // Spec 3 ------------------------------
+
+    // Used by matching mode inputs that should run the default matching mode settings
+    private boolean TemplateMatchingModeUseDefaults(Integer mode)
+    {
+        map.store("name", "Adam");
+        map.store("age", "32");
+        map.store("city", "London");
+
+        String output = engine.evaluate(templateEngineTestString, map, mode);
+        return output.equals("Adam is ${ age  } from London and likes ${like}");
+    }
+
+    @Test
+    public void TemplateMatchingModeNull()
+    {
+        assertTrue(TemplateMatchingModeUseDefaults(null));
+    }
+
+     @Test
+    public void TemplateMatchingModeZero()
+    {
+        assertTrue(TemplateMatchingModeUseDefaults(0));
+    }
+
+    @Test
+    public void TemplateMatchingModeDefault()
+    {
+        assertTrue(TemplateMatchingModeUseDefaults(TemplateEngine.DEFAULT));
+    }
+
+    @Test
+    public void TemplateMatchingModeUnsupported()
+    {
+        assertTrue(TemplateMatchingModeUseDefaults(-1));
+        assertTrue(TemplateMatchingModeUseDefaults(999));
+    }
+
+    @Test
+    public void TemplateConflictingUnmatched()
+    {
+        map.store("name", "Adam");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.KEEP_UNMATCHED | TemplateEngine.DELETE_UNMATCHED);
+        assertEquals(output,"Adam is  from  and likes ");
+    }
+
+    @Test
+    public void TemplateConflictingCase()
+    {
+        map.store("nAme", "Adam");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.CASE_SENSITIVE | TemplateEngine.CASE_INSENSITIVE);
+        assertEquals(output,"${NaMe} is ${ age  } from Edinburgh and likes ${like}");
+    }
+    @Test
+    public void TemplateConflictingSearch()
+    {
+        map.store("nAme", "Adam");
+        map.store("city", "Edinburgh");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH | TemplateEngine.ACCURATE_SEARCH);
+        assertEquals(output,"Adam is ${ age  } from Edinburgh and likes ${like}");
+    }
+
 
 }
