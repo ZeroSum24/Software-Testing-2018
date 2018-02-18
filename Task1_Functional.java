@@ -23,6 +23,11 @@ public class Task1_Functional
         simpleEngine = new SimpleTemplateEngine();
     }
 
+
+    /**
+     * EntryMap Section
+     */
+
     // Spec 1 ------------------------------
 
     @Test(expected = RuntimeException.class)
@@ -55,7 +60,7 @@ public class Task1_Functional
         map.store("age", "19");
         map.store("city", "Edinburgh");
 
-        String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DELETE_UNMATCHED);
+        String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
         assertEquals(output, "Adam is 19 from Edinburgh");
     }
 
@@ -79,9 +84,42 @@ public class Task1_Functional
         map.store("city", "Edinburgh");
         map.store("city", "London");
 
-        String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DELETE_UNMATCHED);
+        String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
         assertEquals(output, "Adam is 19 from Edinburgh");
     }
     // -------------------------------------
+
+    /**
+     * End of EntryMap section
+     */
+
+    /**
+     * TemplateEngine section
+     */
+
+    // Spec 1 ------------------------------
+    @Test
+    public void TemplateNull()
+    {
+       map.store("name", "Adam");
+       String output = engine.evaluate(null, map, TemplateEngine.DEFAULT);
+       assertEquals(output, null);
+    }
+
+    @Test
+    public void TemplateEmpty()
+    {
+       map.store("name", "Adam");
+       String output = engine.evaluate("", map, TemplateEngine.DEFAULT);
+       assertEquals(output, "");
+    }
+
+    // Spec 2 ------------------------------
+    @Test
+    public void TemplateEntryMapNull()
+    {
+        String output = engine.evaluate("${name}", null, TemplateEngine.DEFAULT);
+        assertEquals(output, "${name}");
+    }
 
 }
