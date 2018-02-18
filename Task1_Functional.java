@@ -303,6 +303,36 @@ public class Task1_Functional
         assertEquals(output,"Adam is 19 from Edinburgh and likes ${like}");
     }
 
+    // Spec 4 ------------------------------
+    @Test
+    public void TemplateStandardPattern()
+    {
+        map.store("name", "Adam");
+        map.store("age", "19");
+
+        String output = engine.evaluate("${name} is ${age}", map, TemplateEngine.DEFAULT);
+        assertEquals(output,"Adam is 19");
+    }
+
+    @Test
+    public void TemplateContainsDollarSigns()
+    {
+        map.store("$", "Adam");
+        map.store("$age$", "19");
+
+        String output = engine.evaluate("${$} is ${$age$}", map, TemplateEngine.DEFAULT);
+        assertEquals(output, "Adam is 19");
+    }
+
+    @Test
+    public void TemplateContainsOpeningBrace()
+    {
+        map.store("name{", "Adam");
+        map.store("{age", "19");
+
+        String output = engine.evaluate("${name{} is ${{age}", map, TemplateEngine.DEFAULT);
+        assertEquals("Adam is 19", output);
+    }
 
 
 
