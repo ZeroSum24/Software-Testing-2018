@@ -334,6 +334,79 @@ public class Task1_Functional
         assertEquals("Adam is 19", output);
     }
 
+    // Spec 5 ------------------------------
+
+    @Test
+    public void TemplateBlurSearchSpaces()
+    {
+        map.store("  name  ", "Adam");
+        map.store("a ge", "19");
+        map.store(" c  i  t y", "Edinburgh");
+        map.store("like ", "chocolate");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
+    @Test
+    public void TemplateBlurSearchTabs()
+    {
+        map.store("\t\tname\t\t", "Adam");
+        map.store("a\tge", "19");
+        map.store("\tc\ti\tt\ty", "Edinburgh");
+        map.store("like\t", "chocolate");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
+    @Test
+    public void TemplateBlurSearchCarriageReturns()
+    {
+        map.store("\r\rname\r\r", "Adam");
+        map.store("a\rge", "19");
+        map.store("\rc\ri\rt\ry", "Edinburgh");
+        map.store("like\r", "chocolate");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
+    @Test
+    public void TemplateBlurSearchNewLines()
+    {
+        map.store("\n\nname\n\n", "Adam");
+        map.store("a\nge", "19");
+        map.store("\nc\ni\nt\ny", "Edinburgh");
+        map.store("like\n", "chocolate");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
+    @Test
+    public void TemplateBlurSearchFormFeeds()
+    {
+        map.store("\f\fname\f\f", "Adam");
+        map.store("a\fge", "19");
+        map.store("\fc\fi\ft\fy", "Edinburgh");
+        map.store("like\f", "chocolate");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
+    @Test
+    public void TemplateBlurSearchCarriageReturnPlusNewLine()
+    {
+        map.store("\r\n\r\nname\r\n\r\n", "Adam");
+        map.store("a\r\nge", "19");
+        map.store("\r\nc\r\ni\r\nt\r\ny", "Edinburgh");
+        map.store("like\r\n", "chocolate");
+
+        String output = engine.evaluate(templateEngineTestString, map, TemplateEngine.BLUR_SEARCH);
+        assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
 
 
 
