@@ -45,6 +45,15 @@ public class Task1_Functional
     {
     	map.store("", "text");
     }
+
+    @Test
+    public void EntryMapTemplateLengthOne()
+    {
+        map.store("a", "b");
+
+        String output = engine.evaluate("${a}", map, TemplateEngine.DEFAULT);
+        assertEquals("b", output);
+    }
     // -------------------------------------
 
     // Spec 2 ------------------------------
