@@ -334,6 +334,7 @@ public class Task1_Functional
         assertEquals("Adam is 19", output);
     }
 
+
     // Spec 5 ------------------------------
 
     @Test
@@ -431,6 +432,32 @@ public class Task1_Functional
 
         String output = engine.evaluate("${NaMe} is ${age} from ${CITY} and likes ${Likes}", map, TemplateEngine.CASE_INSENSITIVE);
         assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
+    }
+
+    // Spec 7 ------------------------------
+    @Test
+    public void TemplateSingleNested()
+    {
+        map.store("name", "Adam");
+        map.store("things chocolate and bread", "cheeses");
+        map.store("thing1", "chocolate");
+        map.store("thing2", "bread");
+
+        String output = engine.evaluate("${name}'s favourite ${things ${thing1} and ${thing2}}", map, TemplateEngine.DEFAULT);
+        assertEquals("Adam's favourite cheeses", output);
+    }
+
+    @Test
+    public void TemplateDoubleNested()
+    {
+        map.store("name", "Adam");
+        map.store("things chocolate and bread", "cheeses");
+        map.store("thing1 butter", "chocolate");
+        map.store("thing2", "bread");
+        map.store("thing3", "butter");
+
+        String output = engine.evaluate("${name}'s favourite ${things ${thing1 ${thing3}} and ${thing2}}", map, TemplateEngine.DEFAULT);
+        assertEquals("Adam's favourite cheeses", output);
     }
 
 
