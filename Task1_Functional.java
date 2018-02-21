@@ -224,6 +224,18 @@ public class Task1_Functional {
 		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
 		assertEquals(output, "Adam is 19 from Edinburgh");
 	}
+	
+	@Test
+	public void EntryMapUpdateExistingValueCorrect() {
+		map.store("age", "19");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+
+		map.update("city", "Aberdeen");
+
+		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
+		assertEquals(output, "Adam is 19 from Aberdeen");
+	}
 	// -------------------------------------
 
 	/**
