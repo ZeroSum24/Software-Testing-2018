@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -136,6 +135,19 @@ public class Task1_Functional {
 		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
 		assertEquals(output, "Adam is 19 from Edinburgh");
 	}
+	
+	@Test
+	public void EntryMapDeleteStillOrdered() {
+		map.store("age", "19");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+
+		map.delete("name");
+
+		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
+		assertEquals(output, "${name} is 19 from Edinburgh");
+	}
+	
 	// -------------------------------------
 
 	// Spec 3 ------------Existing Value Pair
@@ -149,9 +161,8 @@ public class Task1_Functional {
 		map.delete("name");
 
 		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
-		assertNotEquals(output, "Adam is 19 from Edinburgh");
+		assertEquals(output, "${name} is 19 from Edinburgh");
 	}
-	// -------------------------------------
 
 	@Test
 	public void EntryMapDeleteExistingValueNothing() {
@@ -262,6 +273,8 @@ public class Task1_Functional {
        String output = engine.evaluate("", map, TemplateEngine.DEFAULT);
        assertEquals(output, "");
     }
+    // -------------------------------------
+
 
     // Spec 2 ------------------------------
     @Test
@@ -270,6 +283,8 @@ public class Task1_Functional {
         String output = engine.evaluate("${name}", null, TemplateEngine.DEFAULT);
         assertEquals(output, "${name}");
     }
+    // -------------------------------------
+
 
     // Spec 3 ------------------------------
 
