@@ -1125,6 +1125,25 @@ public class Task1_Coverage {
 	 * BEGIN TemplateEngine
 	 */
 	
+	@Test
+	public void TemplateEngineEmptyBrackets() {
+		map.store("age", "19");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+
+		String output = engine.evaluate("${name} is ${age} from ${city} and ${}", map, TemplateEngine.DEFAULT);
+		assertEquals(output, "Adam is 19 from Edinburgh and ${}");
+	}
+	
+	@Test
+	public void TemplateEngineMeme() {
+		map.store("a", "1");
+		map.store("b", "2");
+
+		String output = engine.evaluate("}", map, TemplateEngine.DEFAULT);
+		assertEquals(output, "}");
+	}
+	
 	
 	/*
 	 * END TemplateEngine
@@ -1161,6 +1180,26 @@ public class Task1_Coverage {
 		String expected = "Hi, my name is Peter. Peter is my forename.";
 
 		String result = simpleEngine.evaluate(template, "David", "Peter", 999);
+		assertEquals(result, expected);
+	}
+	
+	@Test
+	public void NoNumberStraightAfterHash () 
+	{
+		String template = "aaa";
+		String expected = "aaa";
+
+		String result = simpleEngine.evaluate(template, "#d", "Peter", null);
+		assertEquals(result, expected);
+	}
+	
+	@Test
+	public void MoreThanOneDigitPattern () 
+	{
+		String template = "aaa";
+		String expected = "aaa";
+
+		String result = simpleEngine.evaluate(template, "#22", "Peter", null);
 		assertEquals(result, expected);
 	}
 	

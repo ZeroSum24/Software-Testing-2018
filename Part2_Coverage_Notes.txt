@@ -1,0 +1,38 @@
+TemplateEngine.java coverage notes:
+
+1)             if (currentTemplate != null) {
+                templates.remove(currentTemplate);
+                sortedTemplates.add(currentTemplate);
+            } else{
+                throw new RuntimeException(); <--- NOT COVERED
+            }
+
+Not sure we can cover it given the for loop above, think it's defensive programming.
+First case to reach it is if we give a string bigger than Integer.MAX_VALUE (impossible)
+Second is if...
+
+2)         if (currentTemplate.getEndIndex() == instancedString.length()){
+            secondHalf = ""; <--- NOT COVERED
+        }
+		
+EndIndex is the location in the string but since indexing begins at 0 we surely can't get an EndIndex
+that is the same as the length of the string since in general the max index you can reach is length - 1 (due to 0 indexing)
+
+
+3) TemplateEngine.Template.Equals() <--- METHOD NOT COVERED
+
+Literally impossible for us, since at no point is it ever called in the whole TemplateEngine.java file
+(given that it's also private - no other file should be able to call it)
+
+4)         Integer getTemplatesReplaced() { <--- Method NOT COVERED
+            return templatesReplaced;
+        }
+		
+Exact same reasoning as previous one.
+
+5)          int result = getStartIndex() != null ? getStartIndex().hashCode() : 0;			<-- 1/2 BRANCHES COVERED  
+            result = 31 * result + (getEndIndex() != null ? getEndIndex().hashCode() : 0);  <-- 1/2 BRANCHES COVERED
+            result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);    <-- 1/2 BRANCHES COVERED
+			
+I assume the half missing is if it equals null. I can't say for certain we can't cover it but I think there's a good chance we can't.
+
