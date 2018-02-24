@@ -194,11 +194,6 @@ public class Task1_Functional {
 	}
 	// -------------------------------------
 
-	// TODO: Using the same test set-up for order as Colin but unsure if it is
-	// testing output or order
-	// --> what does the question mean by order?
-	// This is because the output is pulling output regardless of order
-
 	// Spec 3 ------------Consistent Order
 
 	@Test
@@ -592,8 +587,7 @@ public class Task1_Functional {
 	// -------------------------------------
 
 	// Spec 8 ------------Different Template Length Ordering
-	// TODO re-check these again
-
+	
 	@Test
 	public void TemplateDifferentLength() {
 		map.store("s", "19");
@@ -840,8 +834,6 @@ public class Task1_Functional {
 		assertEquals(result, expected);
 	}
 
-	// TODO confirm the not or less interpretation with Colin at point 3
-	// Tests word so **shrugs**
 	@Test
 	public void SimpleValueTwowithmorethan3Values() {
 		String template = "Hi, my name is David. David is my forename. That's right, David being David again.";
@@ -997,9 +989,6 @@ public class Task1_Functional {
 	// --Word_Seperators
 
 	// --Word_Seperators -- digits
-
-	// TODO check interpretation with Colin -- All special characters other than
-	// digits and letters are considered as word separators.
 
 	@Test
 	public void SimpleTemplateCaseWholeWordDigitsPattern() {

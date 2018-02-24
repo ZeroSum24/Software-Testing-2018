@@ -194,11 +194,6 @@ public class Task1_Coverage {
 	}
 	// -------------------------------------
 
-	// TODO: Using the same test set-up for order as Colin but unsure if it is
-	// testing output or order
-	// --> what does the question mean by order?
-	// This is because the output is pulling output regardless of order
-
 	// Spec 3 ------------Consistent Order
 
 	@Test
@@ -592,7 +587,6 @@ public class Task1_Coverage {
 	// -------------------------------------
 
 	// Spec 8 ------------Different Template Length Ordering
-	// TODO re-check these again
 
 	@Test
 	public void TemplateDifferentLength() {
@@ -723,7 +717,7 @@ public class Task1_Coverage {
 		String output = engine.evaluate("${name} is ${age} from ${city} works as a ${occupation}", map,
 				TemplateEngine.DELETE_UNMATCHED);
 		assertEquals(output, "Adam is 19 from Edinburgh works as a ");
-	}// TODO does delete_unmatched need to be on?
+	}
 
 	// -------------------------------------
 
@@ -841,8 +835,6 @@ public class Task1_Coverage {
 		assertEquals(result, expected);
 	}
 
-	// TODO confirm the not or less interpretation with Colin at point 3
-	// Tests word so **shrugs**
 	@Test
 	public void SimpleValueTwowithmorethan3Values() {
 		String template = "Hi, my name is David. David is my forename. That's right, David being David again.";
@@ -999,9 +991,6 @@ public class Task1_Coverage {
 
 	// --Word_Seperators -- digits
 
-	// TODO check interpretation with Colin -- All special characters other than
-	// digits and letters are considered as word separators.
-
 	@Test
 	public void SimpleTemplateCaseWholeWordDigitsPattern() {
 		String template = "localVARIABLE int localId = lo1cal";
@@ -1134,58 +1123,7 @@ public class Task1_Coverage {
 		String output = engine.evaluate("${name} is ${age} from ${city} and ${}", map, TemplateEngine.DEFAULT);
 		assertEquals(output, "Adam is 19 from Edinburgh and ${}");
 	}
-	
-	@Test
-	public void TemplateEngineMeme() {
-		map.store("a", "1");
-		map.store("b", "2");
 
-		String output = engine.evaluate("}", map, TemplateEngine.DEFAULT);
-		assertEquals(output, "}");
-	}
-	
-	//Neither of these tests increase the code_coverage at the moment
-	
-	@Test(expected = RuntimeException.class) //Point 1
-	public void TemplateEngineStoreNullContainer() {
-		map.store("name", null);
-		map.store("city", "Edinburgh");
-		map.store("age", "19");
-		
-		String template = "${name} is ${age} from ${city}";
-		String expected = "Adam is 19 from Edinburgh who is Adam";
-
-		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
-		assertEquals(output, expected);	
-	}
-	
-	
-	@Test
-	public void TemplateEngineSameSizeTemplateAsString() { //Point 2
-		map.store("a", "1");
-		map.store("b", "2");
-		map.store("happy_days_is_A", "10");
-
-		String template = "Xmas Tree is ${happy_days_is_A}";
-		String expected = "Xmas Tree is 10";
-		
-		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
-		assertEquals(output, expected);
-	}
-	
-	
-//	@Test
-//	public void TemplateEnginHashCode() { //Point 2
-//		map.store("a", "1");
-//		map.store("", "2");
-//		map.store("happy_days_is_A", "10");
-//
-//		String template = "Xmas Tree is ${""}";
-//		String expected = "Xmas Tree is 2";
-//		
-//		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
-//		assertEquals(output, expected);
-//	}
 	
 	/*
 	 * END TemplateEngine
