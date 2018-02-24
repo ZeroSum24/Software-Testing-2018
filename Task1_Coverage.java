@@ -1144,7 +1144,34 @@ public class Task1_Coverage {
 		assertEquals(output, "}");
 	}
 	
+	//Neither of these tests increase the code_coverage at the moment
+	@Test
+	public void TemplateEngineSameSizeTemplateAsString() { //Point 2
+		map.store("a", "1");
+		map.store("b", "2");
+		map.store("happy_days_is_A", "10");
+
+		String template = "Xmas Tree is ${happy_days_is_A}";
+		String expected = "Xmas Tree is 10";
+		
+		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+		assertEquals(output, expected);
+	}
 	
+	@Test(expected = RuntimeException.class) //Point 1
+	public void TemplateEngineStoreNullContainer() {
+		map.store("name", null);
+		map.store("city", "Edinburgh");
+		map.store("age", "19");
+		
+		String template = "${name} is ${age} from ${city}";
+		String expected = "Adam is 19 from Edinburgh who is Adam";
+
+		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+//		assertEquals(output, expected);
+		
+		
+	}
 	/*
 	 * END TemplateEngine
 	 */
@@ -1201,6 +1228,17 @@ public class Task1_Coverage {
 
 		String result = simpleEngine.evaluate(template, "#22", "Peter", null);
 		assertEquals(result, expected);
+	}
+	
+	@Test
+	public void PatternMatchAtCharacterAtEndWholeWord() {
+		
+		String template = "bccbbbbaa";
+		String expected = "bccbbbbaa";
+
+		String result = simpleEngine.evaluate(template, "aa", "Peter", SimpleTemplateEngine.WHOLE_WORLD_SEARCH);
+		assertEquals(result, expected);
+		
 	}
 	
 	/*
