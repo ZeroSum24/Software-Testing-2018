@@ -89,7 +89,7 @@ public class SimpleTemplateEngine {
             if (subString.equals(pattern)) {
                 if (wholeWordSearch(matchingMode)) {
                     if (charIndex + patternLength < originalText.length() && Character.isLetterOrDigit(originalText.charAt(charIndex + patternLength))) {
-                        charIndex++;
+                    	charIndex++;
                         continue;
                     }
                     if (charIndex!=0 && Character.isLetterOrDigit(originalText.charAt(charIndex-1))) {

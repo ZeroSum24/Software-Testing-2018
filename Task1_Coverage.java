@@ -1145,6 +1145,21 @@ public class Task1_Coverage {
 	}
 	
 	//Neither of these tests increase the code_coverage at the moment
+	
+	@Test(expected = RuntimeException.class) //Point 1
+	public void TemplateEngineStoreNullContainer() {
+		map.store("name", null);
+		map.store("city", "Edinburgh");
+		map.store("age", "19");
+		
+		String template = "${name} is ${age} from ${city}";
+		String expected = "Adam is 19 from Edinburgh who is Adam";
+
+		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+		assertEquals(output, expected);	
+	}
+	
+	
 	@Test
 	public void TemplateEngineSameSizeTemplateAsString() { //Point 2
 		map.store("a", "1");
@@ -1158,20 +1173,20 @@ public class Task1_Coverage {
 		assertEquals(output, expected);
 	}
 	
-	@Test(expected = RuntimeException.class) //Point 1
-	public void TemplateEngineStoreNullContainer() {
-		map.store("name", null);
-		map.store("city", "Edinburgh");
-		map.store("age", "19");
-		
-		String template = "${name} is ${age} from ${city}";
-		String expected = "Adam is 19 from Edinburgh who is Adam";
-
-		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+	
+//	@Test
+//	public void TemplateEnginHashCode() { //Point 2
+//		map.store("a", "1");
+//		map.store("", "2");
+//		map.store("happy_days_is_A", "10");
+//
+//		String template = "Xmas Tree is ${""}";
+//		String expected = "Xmas Tree is 2";
+//		
+//		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
 //		assertEquals(output, expected);
-		
-		
-	}
+//	}
+	
 	/*
 	 * END TemplateEngine
 	 */
@@ -1241,6 +1256,38 @@ public class Task1_Coverage {
 		
 	}
 	
+	@Test
+	public void PatternMatchAtDigitAtEndWholeWord() {
+		
+		String template = "bccbbb1aa";
+		String expected = "bccbbb1aa";
+
+		String result = simpleEngine.evaluate(template, "aa", "Peter", SimpleTemplateEngine.WHOLE_WORLD_SEARCH);
+		assertEquals(result, expected);
+		
+	}
+	
+	@Test
+	public void PatternMatchAtSymbolAtEndWholeWord() {
+		
+		String template = "bccbbb?ddddaa";
+		String expected = "bccbbb?ddddaa";
+
+		String result = simpleEngine.evaluate(template, "aa", "Peter", SimpleTemplateEngine.WHOLE_WORLD_SEARCH);
+		assertEquals(result, expected);
+		
+	}
+	
+	@Test
+	public void PatternMatchAtSymbolWholeWord() {
+		
+		String template = "a";
+		String expected = "Peter";
+
+		String result = simpleEngine.evaluate(template, "a", "Peter", SimpleTemplateEngine.WHOLE_WORLD_SEARCH);
+		assertEquals(result, expected);
+		
+	}
 	/*
 	 * END SimpleTemplateEngine
 	 */
