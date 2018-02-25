@@ -557,7 +557,7 @@ public class Task1_Functional {
 		assertEquals("Adam is 19 from Edinburgh and likes chocolate", output);
 	}
 	// -------------------------------------
-	
+
 
 	// Spec 7 ------------------------------
 	@Test
@@ -587,7 +587,7 @@ public class Task1_Functional {
 	// -------------------------------------
 
 	// Spec 8 ------------Different Template Length Ordering
-	
+
 	@Test
 	public void TemplateDifferentLength() {
 		map.store("s", "19");
@@ -717,7 +717,7 @@ public class Task1_Functional {
 		String output = engine.evaluate("${name} is ${age} from ${city} works as a ${occupation}", map,
 				TemplateEngine.DELETE_UNMATCHED);
 		assertEquals(output, "Adam is 19 from Edinburgh works as a ");
-	}// TODO does delete_unmatched need to be on?
+	}
 
 	// -------------------------------------
 
