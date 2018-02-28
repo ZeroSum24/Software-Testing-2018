@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -53,11 +54,11 @@ public class Task1_Coverage {
 	@Test
 	public void EntryMapOrderCorrect() {
 		map.store("name", "Adam");
-		map.store("age", "19");
+		map.store("na me", "19");
 		map.store("city", "Edinburgh");
 
-		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
-		assertEquals(output, "Adam is 19 from Edinburgh");
+		String output = engine.evaluate("${na me} is ${name} from ${city}", map, TemplateEngine.BLUR_SEARCH);
+		assertEquals(output, "Adam is Adam from Edinburgh");
 	}
 
 	// -------------------------------------
@@ -1105,7 +1106,38 @@ public class Task1_Coverage {
 	 * BEGIN EntryMap
 	 */
 	
+	@Test
+	public void EntryMapSameObject() {
+		map.store("age", "19");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+		
+		assertEquals(map.getEntries().get(0), map.getEntries().get(0));
+
+	}
 	
+	@Test
+	public void EntryMapNull() {
+		map.store("age", "19");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+		
+		EntryMap nullMap = null;
+		
+		assertNotEquals(map.getEntries().get(0), nullMap);
+	}
+	
+	@Test
+	public void EntryMapNotEqualsPattern() {
+		map.store("age", "19");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+		String obj = "s";
+		
+		assertNotEquals(map.getEntries().get(0),obj);
+	}
+	
+
 	/*
 	 * END EntryMap
 	 */

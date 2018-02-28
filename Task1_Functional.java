@@ -53,11 +53,11 @@ public class Task1_Functional {
 	@Test
 	public void EntryMapOrderCorrect() {
 		map.store("name", "Adam");
-		map.store("age", "19");
+		map.store("na me", "19");
 		map.store("city", "Edinburgh");
 
-		String output = engine.evaluate("${name} is ${age} from ${city}", map, TemplateEngine.DEFAULT);
-		assertEquals(output, "Adam is 19 from Edinburgh");
+		String output = engine.evaluate("${na me} is ${name} from ${city}", map, TemplateEngine.BLUR_SEARCH);
+		assertEquals(output, "Adam is Adam from Edinburgh");
 	}
 
 	// -------------------------------------
