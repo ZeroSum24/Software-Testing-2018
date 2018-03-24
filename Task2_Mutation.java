@@ -56,7 +56,7 @@ public class Task2_Mutation {
 	}
 
 	// MUTATION 2
-	
+		
 	@Test
 	public void UpdateDeletedEntryMapKey() {
 		map.store("name", "Adam");
