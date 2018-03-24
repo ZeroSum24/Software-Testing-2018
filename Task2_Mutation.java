@@ -56,7 +56,7 @@ public class Task2_Mutation {
 	}
 
 	// MUTATION 2
-		
+
 	@Test
 	public void UpdateDeletedEntryMapKey() {
 		map.store("name", "Adam");
@@ -172,6 +172,18 @@ public class Task2_Mutation {
 
 	// MUTATION 9
 
+	@Test
+	public void EntryMapGetValue() {
+		map.store("age", "  ");
+		map.store("city", "Edinburgh");
+		map.store("name", "Adam");
+
+		String template = "${name} is ${age} from ${city}";
+		String expected = "Adam is    from Edinburgh";
+
+		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+		assertEquals(output, expected);
+	}
 
 	// MUTATION 10
 
