@@ -81,6 +81,19 @@ public class Task2_TDD_1 {
 	}
 
 	@Test
+	public void NotANumberTestBaseNonNumYearNumBefore() {
+
+		map.store("year", "3 years ago");
+		map.store("base_year", "won the cup");
+
+		String template = "I was born in ${year} ${base_year}";
+		String expected = "I was born in 2015 won the cup";
+
+		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+		assertEquals(output, expected);
+	}
+
+	@Test
 	public void NotANumberTestBaseNumAfter() {
 
 		map.store("year", "in Three years");
@@ -101,6 +114,19 @@ public class Task2_TDD_1 {
 
 		String template = "I was born in ${year} ${base_year}";
 		String expected = "I was born in in Three years won the cup";
+
+		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
+		assertEquals(output, expected);
+	}
+
+	@Test
+	public void NotANumberTestBaseNonNumYearNumAfter() {
+
+		map.store("year", "in 3 years");
+		map.store("base_year", "won the cup");
+
+		String template = "I was born in ${year} ${base_year}";
+		String expected = "I was born in 2021 won the cup";
 
 		String output = engine.evaluate(template, map, TemplateEngine.DEFAULT);
 		assertEquals(output, expected);
