@@ -17,5 +17,4 @@ http://www.inf.ed.ac.uk/teaching/courses/st/2017-18/practical.html
 
 <br/> 
 
-<i> Credit to: <br/>
-Stephen Waddell, Colin Parrott <i/>
+<i> Credit to: Stephen Waddell, Colin Parrott <i/>
